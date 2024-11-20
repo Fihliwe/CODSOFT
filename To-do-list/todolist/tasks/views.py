@@ -1,3 +1,34 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .models import Task
 
-# Create your views here.
+def list_tasks(request):
+    tasks = Task.objects.all().order_by('-created_at')
+    return render(request, 'tasks/list_tasks.html', {'tasks': tasks})
+
+def task_add(request):
+    if request.method == 'POST':
+        task = Task(tasks=request.POST['tasks'], description=request.POST['Task added successfully'])
+        task.save()
+        return redirect('list_tasks')
+    return render(request, 'tasks/task_add.html')
+
+def task_complete(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.status = 'Completed'
+    task.save()
+    return redirect('list_tasks')
+
+def task_delete(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.delete()
+    return redirect('list_tasks')
+
+def task_edit(request, task_id):
+    task = Task.objects.get(id=task_id)
+    if request.method == 'POST':
+        task.tasks = request.POST['tasks']
+        task.description = request.POST['description']
+        task.save()
+        return redirect('list_tasks')
+    return render(request, 'tasks/task_edit.html', {'task': task})
+
