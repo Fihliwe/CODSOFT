@@ -7,10 +7,11 @@ def list_tasks(request):
 
 def task_add(request):
     if request.method == 'POST':
-        task = Task(tasks=request.POST['tasks'], description=request.POST['Task added successfully'])
-        task.save()
+        task = request.POST.get('task')
+        priority = request.POST.get('priority')
+        if task:
+            Task.objects.create(task=task, priority=priority)
         return redirect('list_tasks')
-    return render(request, 'tasks/task_add.html')
 
 def task_complete(request, task_id):
     task = Task.objects.get(id=task_id)
