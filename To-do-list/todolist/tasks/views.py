@@ -2,8 +2,13 @@ from django.shortcuts import render, redirect
 from .models import Task
 
 def list_tasks(request):
-    tasks = Task.objects.all().order_by('-created_at')
-    return render(request, 'tasks/list_tasks.html', {'tasks': tasks})
+    pending_tasks = Task.objects.filter(status='Pending').order_by('due_date')
+    completed_tasks = Task.objects.filter(status='Completed').order_by('due_date')
+
+    return render(request, 'tasks/list_tasks.html', {
+        'pending_tasks': pending_tasks, 
+        'completed_tasks': completed_tasks
+        })
 
 def task_add(request):
     if request.method == 'POST':
@@ -28,9 +33,18 @@ def task_delete(request, task_id):
 def task_edit(request, task_id):
     task = Task.objects.get(id=task_id)
     if request.method == 'POST':
-        task.tasks = request.POST['tasks']
-        task.description = request.POST['description']
+        # Fetch updated values from the form
+        updated_task = request.POST.get('task', task.task)  # Default to existing value
+        priority = request.POST.get('priority', task.priority)
+        due_date = request.POST.get('due_date', task.due_date)
+
+        # Update the task fields
+        task.task = updated_task
+        task.priority = priority
+        task.due_date = due_date
         task.save()
+
         return redirect('list_tasks')
+
     return render(request, 'tasks/task_edit.html', {'task': task})
 
