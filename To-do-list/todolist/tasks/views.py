@@ -9,8 +9,9 @@ def task_add(request):
     if request.method == 'POST':
         task = request.POST.get('task')
         priority = request.POST.get('priority')
+        due_date = request.POST.get('due_date')
         if task:
-            Task.objects.create(task=task, priority=priority)
+            Task.objects.create(task=task, priority=priority, due_date=due_date)
         return redirect('list_tasks')
 
 def task_complete(request, task_id):

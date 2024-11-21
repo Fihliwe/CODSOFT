@@ -14,6 +14,7 @@ class Task(models.Model):
     status = models.CharField(default='Pending', max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    due_date = models.DateField(default=None, blank=True, null=True)
 
     def __str__(self):
         return self.task
