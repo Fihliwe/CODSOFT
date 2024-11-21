@@ -15,8 +15,9 @@ def task_add(request):
         task = request.POST.get('task')
         priority = request.POST.get('priority')
         due_date = request.POST.get('due_date')
+        notes = request.POST.get('notes')
         if task:
-            Task.objects.create(task=task, priority=priority, due_date=due_date)
+            Task.objects.create(task=task, priority=priority, due_date=due_date, notes=notes)
         return redirect('list_tasks')
 
 def task_complete(request, task_id):
@@ -37,6 +38,7 @@ def task_edit(request, task_id):
         updated_task = request.POST.get('task', task.task)  # Default to existing value
         priority = request.POST.get('priority', task.priority)
         due_date = request.POST.get('due_date', task.due_date)
+        notes = request.POST.get('notes', task.notes)
 
         # Update the task fields
         task.task = updated_task

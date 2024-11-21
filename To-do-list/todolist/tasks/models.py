@@ -15,6 +15,7 @@ class Task(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     due_date = models.DateField(default=None, blank=True, null=True)
+    notes = models.TextField(default=None, blank=True, null=True)
 
     def __str__(self):
         return self.task

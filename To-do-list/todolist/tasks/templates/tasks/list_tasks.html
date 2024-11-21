@@ -9,12 +9,21 @@
     <form action="{% url 'task_add' %}" method="POST">
         {% csrf_token %}
         <input type="text" name="task" placeholder="New Task" required>
+        <br>
+        <textarea 
+            type="text"
+            name="notes" 
+            placeholder="Type your notes here">
+        </textarea>
+        <br>
         <select name="priority">
             <option value="Low">Low</option>
             <option value="Medium">Medium</option>
             <option value="High">High</option>
         </select>
+        <br>
         <input type="date" name="due_date">
+        <br>
         <button type="submit">Add Task</button>
     </form>
 
@@ -28,6 +37,8 @@
                         Status: <span class="text-yellow-600">{{ task.status }}</span>
                         | Priority: <span class="{% if task.priority == 'High' %}text-red-600{% elif task.priority == 'Medium' %}text-blue-600{% else %}text-gray-600{% endif %}">{{ task.priority }}</span>
                         | Due: <span class="{% if task.due_date and task.due_date < today %}text-red-500{% else %}text-gray-500{% endif %}">{{ task.due_date }}</span>
+                        <br>
+                        | Notes: <span class="text-gray-500">{{ task.notes }}</span>
                     </p>
                 </div>
                 <div class="flex space-x-4">
@@ -41,26 +52,29 @@
         {% endfor %}
     </ul>
 
-    <h2>Completed Tasks</h2>
-    <ul class="divide-y divide-gray-200 rounded-lg shadow-lg bg-white overflow-hidden">
-        {% for task in completed_tasks %}
-            <li class="p-4 flex items-center justify-between hover:bg-gray-50">
-                <div>
-                    <h3 class="text-lg font-medium text-gray-900">{{ task.task }}</h3>
-                    <p class="text-sm text-gray-500">
-                        Status: <span class="text-green-600">{{ task.status }}</span>
-                        | Priority: <span class="{% if task.priority == 'High' %}text-red-600{% elif task.priority == 'Medium' %}text-blue-600{% else %}text-gray-600{% endif %}">{{ task.priority }}</span>
-                        | Due: <span class="text-gray-500">{{ task.due_date }}</span>
-                    </p>
-                </div>
-                <div class="flex space-x-4">
-                    <a href="{% url 'task_delete' task.id %}" class="text-sm text-red-600 hover:underline">Delete</a>
-                </div>
-            </li>
-        {% empty %}
-            <p>No completed tasks.</p>
-        {% endfor %}
-    </ul>
+    <div class="">
+        <h2>Completed Tasks</h2>
+        <ul class="divide-y divide-gray-200 rounded-lg shadow-lg bg-white overflow-hidden">
+            {% for task in completed_tasks %}
+                <li class="p-4 flex items-center justify-between hover:bg-gray-50">
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900">{{ task.task }}</h3>
+                        <p class="text-sm text-gray-500">
+                            Status: <span class="text-green-600">{{ task.status }}</span>
+                            | Priority: <span class="{% if task.priority == 'High' %}text-red-600{% elif task.priority == 'Medium' %}text-blue-600{% else %}text-gray-600{% endif %}">{{ task.priority }}</span>
+                            | Due: <span class="text-gray-500">{{ task.due_date }}</span>
+                        </p>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="{% url 'task_delete' task.id %}" class="text-sm text-red-600 hover:underline">Delete</a>
+                    </div>
+                </li>
+            {% empty %}
+                <p>No completed tasks.</p>
+            {% endfor %}
+        </ul>
+    </div>
+    
     
 </body>
 </html>
