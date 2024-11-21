@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <title>To-Do List</title>
+    <link  rel="stylesheet" href="../../static/list_tasks.css ">
 </head>
 <body>
     <h1>To-Do List</h1>
@@ -27,32 +28,38 @@
         <button type="submit">Add Task</button>
     </form>
 
-    <h2>Pending Tasks</h2>
-    <ul class="divide-y divide-gray-200 rounded-lg shadow-lg bg-white overflow-hidden">
-        {% for task in pending_tasks %}
-            <li class="p-4 flex items-center justify-between hover:bg-gray-50">
-                <div>
-                    <h3 class="text-lg font-medium text-gray-900">{{ task.task }}</h3>
-                    <p class="text-sm text-gray-500">
-                        Status: <span class="text-yellow-600">{{ task.status }}</span>
-                        | Priority: <span class="{% if task.priority == 'High' %}text-red-600{% elif task.priority == 'Medium' %}text-blue-600{% else %}text-gray-600{% endif %}">{{ task.priority }}</span>
-                        | Due: <span class="{% if task.due_date and task.due_date < today %}text-red-500{% else %}text-gray-500{% endif %}">{{ task.due_date }}</span>
-                        <br>
-                        | Notes: <span class="text-gray-500">{{ task.notes }}</span>
-                    </p>
-                </div>
-                <div class="flex space-x-4">
-                    <a href="{% url 'task_complete' task.id %}" class="text-sm text-green-600 hover:underline">Complete</a>
-                    <a href="{% url 'task_edit' task.id %}" class="text-sm text-blue-600 hover:underline">Edit</a>
-                    <a href="{% url 'task_delete' task.id %}" class="text-sm text-red-600 hover:underline">Delete</a>
-                </div>
-            </li>
-        {% empty %}
-            <p>No pending tasks.</p>
-        {% endfor %}
-    </ul>
+    <div id="tasks_wrapper">
+    <div id="pending_div">
+        <h2>Pending Tasks</h2>
+            <ul class="divide-y divide-gray-200 rounded-lg shadow-lg bg-white overflow-hidden">
+                {% for task in pending_tasks %}
+                    <li class="p-4 flex items-center justify-between hover:bg-gray-50">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900">{{ task.task }}</h3>
+                            <p class="text-sm text-gray-500">
+                                Status: <span class="text-yellow-600">{{ task.status }}</span>
+                                | Priority: <span class="{% if task.priority == 'High' %}text-red-600{% elif task.priority == 'Medium' %}text-blue-600{% else %}text-gray-600{% endif %}">{{ task.priority }}</span>
+                                | Due: <span class="{% if task.due_date and task.due_date < today %}text-red-500{% else %}text-gray-500{% endif %}">{{ task.due_date }}</span>
+                                <br>
+                                ----------------------------------------------------------------------
+                                <br>
+                                Notes: <span class="text-gray-500">{{ task.notes }}</span>
+                            </p>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="{% url 'task_complete' task.id %}" class="text-sm text-green-600 hover:underline">Complete</a>
+                            <a href="{% url 'task_edit' task.id %}" class="text-sm text-blue-600 hover:underline">Edit</a>
+                            <a href="{% url 'task_delete' task.id %}" class="text-sm text-red-600 hover:underline">Delete</a>
+                        </div>
+                    </li>
+                {% empty %}
+                    <p>No pending tasks.</p>
+                {% endfor %}
+            </ul>
+    </div>
+    
 
-    <div class="">
+    <div id="completed_div">
         <h2>Completed Tasks</h2>
         <ul class="divide-y divide-gray-200 rounded-lg shadow-lg bg-white overflow-hidden">
             {% for task in completed_tasks %}
@@ -73,6 +80,7 @@
                 <p>No completed tasks.</p>
             {% endfor %}
         </ul>
+    </div>
     </div>
     
     

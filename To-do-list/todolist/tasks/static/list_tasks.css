@@ -1,0 +1,12 @@
+#completed_div {
+    width: 45%;
+    float: right;
+    border-radius: 10px;
+    background-color: blueviolet;
+}
+#pending_div {
+    width: 45%;
+    float: left; 
+    border-radius: 10px;
+    background-color: blue;
+}
