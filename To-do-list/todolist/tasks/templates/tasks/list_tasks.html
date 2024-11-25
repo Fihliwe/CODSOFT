@@ -7,26 +7,20 @@
 <body>
     <h1>To-Do List</h1>
 
+    <div id="form_div">
     <form action="{% url 'task_add' %}" method="POST">
         {% csrf_token %}
         <input type="text" name="task" placeholder="New Task" required>
-        <br>
-        <textarea 
-            type="text"
-            name="notes" 
-            placeholder="Type your notes here">
-        </textarea>
-        <br>
         <select name="priority">
             <option value="Low">Low</option>
             <option value="Medium">Medium</option>
             <option value="High">High</option>
         </select>
-        <br>
         <input type="date" name="due_date">
         <br>
         <button type="submit">Add Task</button>
     </form>
+    </div>
 
     <div id="tasks_wrapper">
     <div id="pending_div">
@@ -47,9 +41,9 @@
                             </p>
                         </div>
                         <div class="flex space-x-4">
-                            <a href="{% url 'task_complete' task.id %}" class="text-sm text-green-600 hover:underline">Complete</a>
-                            <a href="{% url 'task_edit' task.id %}" class="text-sm text-blue-600 hover:underline">Edit</a>
-                            <a href="{% url 'task_delete' task.id %}" class="text-sm text-red-600 hover:underline">Delete</a>
+                            <a href="{% url 'task_complete' task.id %}" class="hover:underline">Complete</a>
+                            <a href="{% url 'task_edit' task.id %}" class="hover:underline">Edit</a>
+                            <a href="{% url 'task_delete' task.id %}" class="hover:underline">Delete</a>
                         </div>
                     </li>
                 {% empty %}
