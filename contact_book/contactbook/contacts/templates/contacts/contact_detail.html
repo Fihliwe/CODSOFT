@@ -1,5 +1,14 @@
-<h1>{{ contact.first_name }} {{ contact.last_name }}</h1>
-<p>Phone: {{ contact.phone_number }}</p>
-<p>Email: {{ contact.email }}</p>
-<p>Address: {{ contact.address }}</p>
-<a href="{{ contact.id }}/edit/">Edit</a> | <a href="{{ contact.id }}/delete/">Delete</a>
+{% extends 'contacts/base.html' %}
+
+{% block content %}
+    <div class="contact-detail">
+        <h2>{{ contact.first_name }} {{ contact.last_name }}</h2>
+        <p><strong>Phone:</strong> {{ contact.phone_number }}</p>
+        <p><strong>Email:</strong> {{ contact.email }}</p>
+        <p><strong>Address:</strong> {{ contact.address }}</p>
+        <div class="actions">
+            <a href="{{ contact.id }}/edit/" class="btn">Edit</a>
+            <a href="{{ contact.id }}/delete/" class="btn delete">Delete</a>
+        </div>
+    </div>
+{% endblock %}

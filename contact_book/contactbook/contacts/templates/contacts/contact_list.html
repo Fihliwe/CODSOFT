@@ -1,4 +1,18 @@
-{% for contact in contacts %}
-    <a href="{{ contact.id }}/">{{ contact.first_name }} {{ contact.last_name }}</a><br>
-{% endfor %}
-<a href="add/">Add Contact</a>
+{% extends 'contacts/base.html' %}
+
+{% block content %}
+    <div class="contact-list">
+        <form method="get" class="search-form">
+            <input type="text" name="search" placeholder="Search contacts..." value="{{ request.GET.search }}">
+            <button type="submit">Search</button>
+        </form>
+        {% for contact in contacts %}
+            <div class="contact-card">
+                <h2>{{ contact.first_name }} {{ contact.last_name }}</h2>
+                <p>Phone: {{ contact.phone_number }}</p>
+                <p>Email: {{ contact.email }}</p>
+                <a href="{{ contact.id }}/" class="btn">View Details</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
