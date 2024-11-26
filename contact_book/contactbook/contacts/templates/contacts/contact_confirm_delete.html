@@ -1,0 +1,6 @@
+<form method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete {{ contact.first_name }} {{ contact.last_name }}?</p>
+    <button type="submit">Yes</button>
+    <a href="/">Cancel</a>
+</form>

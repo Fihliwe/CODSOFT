@@ -1,0 +1,4 @@
+{% for contact in contacts %}
+    <a href="{{ contact.id }}/">{{ contact.first_name }} {{ contact.last_name }}</a><br>
+{% endfor %}
+<a href="add/">Add Contact</a>
